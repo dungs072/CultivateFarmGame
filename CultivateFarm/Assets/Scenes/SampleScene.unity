@@ -1042,6 +1042,7 @@ GameObject:
   - component: {fileID: 2223006183405195490}
   - component: {fileID: 1986981028864396971}
   - component: {fileID: 2704568715766706448}
+  - component: {fileID: 3433050181725758963}
   m_Layer: 0
   m_Name: FreeLook Camera
   m_TagString: Camera
@@ -1049,6 +1050,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3433050181725758963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3433050181725758962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb7194dc27b9df64c8beca7482ee8e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerIndex: -1
+  XYAxis: {fileID: -6239411847771392402, guid: 09641a673d64b1441bc31ddcacbd34c4, type: 3}
+  ZAxis: {fileID: 0}
 --- !u!114 &4244503118271238080
 MonoBehaviour:
   m_ObjectHideFlags: 3

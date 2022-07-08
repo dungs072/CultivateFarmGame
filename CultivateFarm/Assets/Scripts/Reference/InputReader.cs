@@ -10,7 +10,9 @@ public class InputReader : NetworkBehaviour,Controllers.IPlayerActions
     public Vector2 MovementValue { get { return movementValue; } }
     [SyncVar]
     private Vector2 movementValue;
-    public bool IsSpeedUp { get; private set; }
+    public bool IsSpeedUp { get { return isSpeedUp; } }
+    [SyncVar]
+    private bool isSpeedUp;
     private Controllers controls;
     private void Start()
     {
@@ -25,25 +27,32 @@ public class InputReader : NetworkBehaviour,Controllers.IPlayerActions
         movementValue = context.ReadValue<Vector2>();
         if (isClientOnly)
         {
+            if (!isActiveAndEnabled) { return; }
             CmdSetMovementValue(movementValue);
         }
     }
 
     public void OnSpeedUp(InputAction.CallbackContext context)
     {
+        if (!isActiveAndEnabled) { return; }
         if (context.performed)
         {
-            IsSpeedUp = true;
+            CmdSetCanSpeedUp(true);
         }
         else if (context.canceled)
         {
-            IsSpeedUp = false;
+            CmdSetCanSpeedUp(false);
         }
     }
     [Command]
     private void CmdSetMovementValue(Vector2 movementValue)
     {
         this.movementValue = movementValue;
+    }
+    [Command]
+    private void CmdSetCanSpeedUp(bool isSpeedUp)
+    {
+        this.isSpeedUp = isSpeedUp;
     }
 
     public void OnLook(InputAction.CallbackContext context)

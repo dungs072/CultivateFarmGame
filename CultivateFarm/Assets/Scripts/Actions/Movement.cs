@@ -26,6 +26,7 @@ public class Movement : MonoBehaviour
     }
     public void UpdateAnimationMovement(float deltaTime)
     {
+        if (referManagement == null) { return; }
         Vector2 MovementValue = referManagement.InputReader.MovementValue;
         bool isSpeedUp = referManagement.InputReader.IsSpeedUp;
         if(MovementValue==Vector2.zero)
