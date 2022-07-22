@@ -7,27 +7,58 @@ using Mirror;
 public class PlayerController : NetworkBehaviour
 {
     [SerializeField] private Movement movement;
-    [SerializeField] private Transform followTransform;
-    [SerializeField] private Transform lookAtTransform;
-    private CinemachineFreeLook freeLookCamera;
+    [SerializeField] private Fighter fighter;
+  
+
+    private CameraManagement cameraManagement;
+
+    private float cinemachineTargetYaw;
+    private float cinemachineTargetPitch;
+    private bool captureCursor;
     private void Start()
     {
-        if (!isLocalPlayer) { return; }
-        freeLookCamera = GameObject.FindWithTag("Camera").GetComponent<CinemachineFreeLook>();
-        freeLookCamera.Follow = followTransform;
-        freeLookCamera.LookAt = lookAtTransform;
+        SetCursorState(true);
     }
     private void Update()
     {
         movement.UpdateAnimationMovement(Time.deltaTime);
+        
         if (!isLocalPlayer) { return; }
-        Move();
+        HandlePressEscapeKey();
+        HandleMove();
+        HandleJump();
+        HandleAimRotation();
+        
+    }
+    private void LateUpdate()
+    {
+        fighter.CameraRotate(Time.deltaTime);
+    }
+    private void HandlePressEscapeKey()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SetCursorState(captureCursor);
+            captureCursor = !captureCursor;
+        }
     }
 
-    private void Move()
+    private void HandleMove()
     {
         movement.MoveTo(Time.deltaTime);
     }
+    private void HandleAimRotation()
+    {
+        fighter.CharacterRotation();
+    }
+    private void HandleJump()
+    {
+        movement.HandleJump();
+    }
+    private void SetCursorState(bool newState)
+    {
+        Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+    }
+    
 
-  
 }
